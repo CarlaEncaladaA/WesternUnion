@@ -53,7 +53,7 @@ public class WesternUnionApplicationTests {
                 .contentType("application/json")
                 .content(requestBody))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.mensaje").value("Transferencia realizada correctamente"));
+                .andExpect(jsonPath("$.mensaje").value("Transferencia realizada con éxito"));
     }
 
     @Test
@@ -88,4 +88,19 @@ public class WesternUnionApplicationTests {
                 .andExpect(jsonPath("$.error").exists());
     }
 
+    @Test
+    public void testCalculoComisiones() throws Exception {
+        String requestBody = """
+            {
+              "pais": "Ecuador",
+              "monto": 100.0
+            }
+        """;
+
+        mockMvc.perform(post(API_COMISIONES)
+                .contentType("application/json")
+                .content(requestBody))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.comision").exists());
+    }
 }
